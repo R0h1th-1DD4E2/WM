@@ -1,0 +1,55 @@
+#monitor names
+primary_monitor="LVDS-1"
+secondary_monitor="HDMI-1"
+
+# Define available monitor modes
+modes=("primary" "extended" "secondary")
+
+# Get the current mode from a file or a config variable
+current_mode=$(cat ~/.monitor_mode 2>/dev/null)
+current_mode_index=-1
+
+# Find the current mode index in the list
+for i in "${!modes[@]}"; do
+    if [ "${modes[i]}" = "$current_mode" ]; then
+        current_mode_index=$i
+        break
+    fi
+done
+
+# If the current mode is not found, set it to the default mode
+if [ "$current_mode_index" -eq -1 ]; then
+    current_mode_index=0
+fi
+
+# Increment the mode index or cycle back to the beginning
+current_mode_index=$(( (current_mode_index + 1) % ${#modes[@]} ))
+
+# Set the new mode
+new_mode="${modes[current_mode_index]}"
+echo "$new_mode" > ~/.monitor_mode
+
+# Use xrandr to switch monitor modes based on the selected configuration
+case "$new_mode" in
+    "primary")
+        xrandr --output $primary_monitor --auto --output $secondary_monitor --off
+        ;;
+    "extended")
+        xrandr --output $primary_monitor --auto --output $secondary_monitor --auto --right-of $primary_monitor
+        ;;
+    "secondary")
+        xrandr --output $primary_monitor --off --output $secondary_monitor --auto
+        ;;
+    *)
+        echo "Invalid mode: $new_mode"
+        exit 1
+        ;;
+esac
+
+#set the wallpaper using feh
+.fehbg
+
+# Start Polybar
+.polybar
+
+

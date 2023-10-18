@@ -1,0 +1,18 @@
+#!/bin/bash
+
+#kill any running Polybar instances
+
+killall -q polybar
+
+# Wait until all Polybar instances have been killed
+
+while pgrep -x polybar >/dev/null; do sleep 1; done
+
+# List of monitor names
+
+monitors=($(xrandr --listmonitors | awk '{print $4}'))
+
+# Start Polybar on each monitor
+for monitor in "${monitors[@]}"; do
+	polybar --config=~/.config/polybar/config.ini "$monitor" &
+done
