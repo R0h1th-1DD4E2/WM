@@ -66,7 +66,12 @@ case $distro in
         cd ..
 
         #Installing PICOM
-        
+        # I'll fill this later 
+
+        #Installing Oh-my-posh
+        curl -s https://ohmyposh.dev/install.sh | bash -s -- -d ./
+
+        mv oh-my-posh 
 
         ;;
     *)
@@ -75,3 +80,14 @@ case $distro in
 esac
 
 #step 2 - configure the window manager
+
+# Custom Functions
+if_dir_exists() {
+    local dir_path="$1"
+
+    if [ -d "$dir_path" ]; then
+        return 0  # Directory exists
+    else
+        return 1  # Directory does not exist
+    fi
+} 
