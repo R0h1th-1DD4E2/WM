@@ -1,5 +1,14 @@
 #!/bin/bash
 
+echo ".####...#######."
+echo ".####..##.....##"
+echo "..............##"
+echo "..##....#######."
+echo "..##..........##"
+echo "..##...##.....##"
+echo ".####...#######."
+
+
 echo "!!!!!!!!------ Warning ------!!!!!!!!!"
 echo "You will be Prompt to enter sudo password, Use it at your own risk as it involves installing packages and it hasn't been tested properly"
 echo "--------------------------------------"
@@ -28,7 +37,7 @@ case $distro in
     "Ubuntu")
         #Installing i3 rofi feh
 
-        echo "Installing i3 rofi feh .........."
+        echo "Installing i3, rofi, feh, neofetch.........."
         sudo apt -y install i3 rofi feh 
 
         #All the git repos and source build is done in this folder
@@ -71,7 +80,7 @@ case $distro in
         #Installing Oh-my-posh
         curl -s https://ohmyposh.dev/install.sh | bash -s -- -d ./
 
-        mv oh-my-posh 
+        
 
         ;;
     *)
