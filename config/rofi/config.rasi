@@ -1,5 +1,5 @@
 configuration{
-    modi: "run,drun,window";
+    modi: "drun,run,window,emoji";
     icon-theme: "Oranchelo";
     show-icons: true;
     terminal: "alacritty";
@@ -7,12 +7,13 @@ configuration{
     location: 0;
     disable-history: false;
     hide-scrollbar: true;
+    display-drun: "   Apps ";
     display-run: "   Run ";
-     display-drun: "   Apps ";
-    display-window: " 﩯  Window";
+    display-emoji: "🙂 Emoji";
+    display-window: " 🗔 Window";
     display-Network: " 󰤨  Network";
     sidebar-mode: true;
 }
 
-@theme "catppuccin-mocha"
+@theme "catppuccin-macchiato"
 
