@@ -1,7 +1,6 @@
 #!/bin/sh
 
-# Set a random background image from a directory (replace "/path/to/your/images" with your image directory)
-background=$(find /path/to/your/images -type f | shuf -n 1)
+background=$(find ~/Pictures/Wall/ -type f | shuf -n 1)
 
 # Run i3lock with custom settings
 i3lock --image "$background" \

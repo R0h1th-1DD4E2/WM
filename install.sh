@@ -26,12 +26,58 @@ else
     exit 1
 fi
 
-#step 1 - install the i3 window manager
+#step 1 - install the i3 window manager and required packages
 distro=$(cat /etc/os-release | awk -F= '/NAME=/ {gsub(/"/, "", $2); print $2; exit}')
 
 case $distro in
     "Arch Linux")
         #i will fill with the dependencies to install i3, polybar, alacrity, rofi , feh, neofetch
+        echo "Installing i3, rofi, feh, neofetch.........."
+        sudo pacman -s neofetch i3-wm rofi rofi-emoji feh alacritty picom 
+
+        read -p "Do you want to install oh-my-posh? (y/n): " opinion
+        if [ "$opinion" = "y" ] || [ "$opinion" = "Y" ]; then
+            echo "Installing Oh-my-posh......."
+            #Installing Oh-my-posh
+        
+            curl -s https://ohmyposh.dev/install.sh | bash -s -- -d ./
+
+            if_dir_exists "$HOME/.oh-my-posh"
+            if_dir_exists "$HOME/.local/share/oh-my-posh/themes"
+            
+            cp oh-my-posh $HOME/.oh-my-posh
+
+            source_dir="$HOME/.cache/oh-my-posh/themes"
+            destination_dir="$HOME/.local/share/oh-my-posh/themes"
+
+            if [ -d "$source_dir" ]; then
+                mv "$source_dir" "$destination_dir"
+                echo "Themes moved from $source_dir to $destination_dir"
+            else
+                echo "Source directory $source_dir not found."
+                echo "Try installing oh-my-posh again manually "
+            fi
+
+            ohmyposh_path="$HOME/.oh-my-posh"
+            ohmyposh_theme_command="eval \"\$(oh-my-posh init bash --config $HOME/.local/share/oh-my-posh/themes/catppuccin_macchiato.omp.json)\""
+
+            # Adding the paths and configurations to .bashrc
+            if ! grep -q "export PATH=\"$ohmyposh_path\"" "$HOME/.bashrc"; then
+                echo "export PATH=\"$ohmyposh_path\"" >> "$HOME/.bashrc"
+            fi
+
+            if ! grep -q "$ohmyposh_theme_command" "$HOME/.bashrc"; then
+                echo "$ohmyposh_theme_command" >> "$HOME/.bashrc"
+            fi
+
+            # Source the updated .bashrc
+            source "$HOME/.bashrc"
+        else
+            echo "Oh-my=posh was not installed ..."
+        fi
+        
+        echo "Moving config files......"
+
         ;;
     "Fedora Linux")
         #i will fill with the dependencies to install i3, polybar, alacrity, rofi , feh, neofetch
@@ -65,7 +111,6 @@ case $distro in
             echo "Alacritty is installed"
         else
             echo "Alacritty is not installed correctly."
-            echo "Trying to fix........"
             sudo tic -xe alacritty,alacritty-direct extra/alacritty.info
         fi
 
@@ -73,16 +118,13 @@ case $distro in
         sudo cp target/release/alacritty /usr/local/bin
 
         #autocompletion
-        mkdir $HOME/.alacritty
-        cp ./extra/completions/alacritty.bash $HOME/.alacritty/
-        echo "source $HOME/.alacritty/alacritty.bash" >> ~/.bashrc
+        echo "source $(pwd)/extra/completions/alacritty.bash" >> ~/.bashrc
 
-        cd .. #exiting the alacritty directory
-        #-----------------------------------------------|||||||||||||||||||----------------------------------------------------
+        cd ..
 
         #Installing PICOM
         
-        echo "Installing Picom ........"
+        echo "Installing Picom........"
 
         # Dependencies
         sudo apt install libconfig-dev libdbus-1-dev libegl-dev libev-dev libgl-dev libpcre2-dev libpixman-1-dev libx11-xcb-dev libxcb1-dev libxcb-composite0-dev libxcb-damage0-dev libxcb-dpms0-dev libxcb-glx0-dev libxcb-image0-dev libxcb-present-dev libxcb-randr0-dev libxcb-render0-dev libxcb-render-util0-dev libxcb-shape0-dev libxcb-util-dev libxcb-xfixes0-dev libxext-dev meson ninja-build uthash-dev
@@ -101,6 +143,8 @@ case $distro in
         cd ..
 
         #Installing Oh-my-posh
+        echo "Installing Oh-my-posh......."
+
         curl -s https://ohmyposh.dev/install.sh | bash -s -- -d ./
 
         if_dir_exists "$HOME/.oh-my-posh"
@@ -116,6 +160,7 @@ case $distro in
             echo "Themes moved from $source_dir to $destination_dir"
         else
             echo "Source directory $source_dir not found."
+            echo "Try installing oh-my-posh again manually "
         fi
 
         ohmyposh_path="$HOME/.oh-my-posh"
@@ -135,6 +180,8 @@ case $distro in
 
         cd ..
 
+        echo "Moving config files......"
+ 
         ;;
     *)
         echo "Distribution not recognized. This install script is only made for Arch , Fedora and Ubuntu."
@@ -142,7 +189,7 @@ case $distro in
 esac
 
 #step 2 - configure the window manager
- 
+
 # Custom Functions
 if_dir_exists() {
     local dir_path="$1"
