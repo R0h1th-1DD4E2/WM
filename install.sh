@@ -1,19 +1,20 @@
 #!/bin/bash
 
-echo ".####...#######."
-echo ".####..##.....##"
-echo "..............##"
-echo "..##....#######."
-echo "..##..........##"
-echo "..##...##.....##"
-echo ".####...#######."
+echo -e "\e[32m ####   ####### \e[0m"
+echo -e "\e[32m ####  ##     ##\e[0m"
+echo -e "\e[32m              ##\e[0m"
+echo -e "\e[32m  ##    ####### \e[0m"
+echo -e "\e[32m  ##          ##\e[0m"
+echo -e "\e[32m  ##   ##     ##\e[0m"
+echo -e "\e[32m ####   ####### \e[0m"
 
 
-echo "!!!!!!!!---------------- Warning -------------!!!!!!!!!"
-echo "////// You will be Prompt to enter sudo password,//////" 
-echo "// Use it at your own risk as it involves installing //"
-echo "///// packages and it hasn't been tested properly /////" 
-echo "-------------------------------------------------------"
+echo -e "\e[31m!!!!!!!!---------------- Warning -------------!!!!!!!!!\e[0m"
+echo -e "\e[31m////// You will be Prompt to enter sudo password,//////\e[0m"
+echo -e "\e[31m// Use it at your own risk as it involves installing //\e[0m"
+echo -e "\e[31m///// packages and it hasn't been tested properly /////\e[0m"
+echo -e "\e[31m-------------------------------------------------------\e[0m"
+
 
 # Prompt the user for confirmation
 read -p "Do you want to run my script? (y/n): " choice
