@@ -82,7 +82,7 @@ case $distro in
     "Fedora Linux")
         #i will fill with the dependencies to install i3, polybar, alacrity, rofi , feh, neofetch
         ;;
-    "Ubuntu")
+    "Ubuntu" | "Debian"*)
         #Installing i3 rofi feh
 
         echo "Installing i3, rofi, feh, neofetch.........."
