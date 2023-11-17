@@ -65,6 +65,7 @@ case $distro in
             echo "Alacritty is installed"
         else
             echo "Alacritty is not installed correctly."
+            echo "Trying to fix........"
             sudo tic -xe alacritty,alacritty-direct extra/alacritty.info
         fi
 
@@ -72,13 +73,16 @@ case $distro in
         sudo cp target/release/alacritty /usr/local/bin
 
         #autocompletion
-        echo "source $(pwd)/extra/completions/alacritty.bash" >> ~/.bashrc
+        mkdir $HOME/.alacritty
+        cp ./extra/completions/alacritty.bash $HOME/.alacritty/
+        echo "source $HOME/.alacritty/alacritty.bash" >> ~/.bashrc
 
-        cd ..
+        cd .. #exiting the alacritty directory
+        #-----------------------------------------------|||||||||||||||||||----------------------------------------------------
 
         #Installing PICOM
         
-        echo "Installing Picom........"
+        echo "Installing Picom ........"
 
         # Dependencies
         sudo apt install libconfig-dev libdbus-1-dev libegl-dev libev-dev libgl-dev libpcre2-dev libpixman-1-dev libx11-xcb-dev libxcb1-dev libxcb-composite0-dev libxcb-damage0-dev libxcb-dpms0-dev libxcb-glx0-dev libxcb-image0-dev libxcb-present-dev libxcb-randr0-dev libxcb-render0-dev libxcb-render-util0-dev libxcb-shape0-dev libxcb-util-dev libxcb-xfixes0-dev libxext-dev meson ninja-build uthash-dev
@@ -138,7 +142,7 @@ case $distro in
 esac
 
 #step 2 - configure the window manager
-
+ 
 # Custom Functions
 if_dir_exists() {
     local dir_path="$1"
