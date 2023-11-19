@@ -93,7 +93,7 @@ case $distro in
         mkdir build_files
 
         #installing alacritty dependencies
-        sudo apt -y install cmake pkg-config libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3 curl cargo
+        sudo apt -y install cmake pkg-config libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3 curl
 
         #Installing Rust
         sudo curl https://sh.rustup.rs -sSf | sh
