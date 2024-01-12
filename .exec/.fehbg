@@ -1,2 +1,2 @@
 #!/bin/sh
-feh --no-fehbg --randomize --bg-fill /home/ronix/Pictures/* 
+feh --no-fehbg --randomize --bg-fill /home/ronix/Pictures/wall/*
