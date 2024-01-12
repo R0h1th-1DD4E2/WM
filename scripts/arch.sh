@@ -28,43 +28,7 @@ if_dir_exists() {
 } 
 
 echo "Installing i3, rofi, feh, neofetch.........."
-        sudo pacman -s neofetch i3-wm rofi rofi-emoji feh alacritty picom starship paru 
-
-        read -p "Do you want to install oh-my-posh? (y/n): " opinion
-        if [ "$opinion" = "y" ] || [ "$opinion" = "Y" ]; then
-            echo "Installing Oh-my-posh......."
-            #Installing Oh-my-posh
-        
-            curl -s https://ohmyposh.dev/install.sh | bash -s -- -d ./
-
-            if_dir_exists "$HOME/.oh-my-posh"
-            if_dir_exists "$HOME/.local/share/oh-my-posh/themes"
-            
-            cp oh-my-posh $HOME/.oh-my-posh
-
-            source_dir="$HOME/.cache/oh-my-posh/themes"
-            destination_dir="$HOME/.local/share/oh-my-posh/themes"
-
-            if [ -d "$source_dir" ]; then
-                mv "$source_dir" "$destination_dir"
-                echo "Themes moved from $source_dir to $destination_dir"
-            else
-                echo "Source directory $source_dir not found."
-                echo "Try installing oh-my-posh again manually "
-            fi
-
-            ohmyposh_path="$HOME/.oh-my-posh"
-            ohmyposh_theme_command="eval \"\$(oh-my-posh init bash --config $HOME/.local/share/oh-my-posh/themes/catppuccin_macchiato.omp.json)\""
-
-            # Adding the paths and configurations to .bashrc
-            if ! grep -q "export PATH=\"$ohmyposh_path\"" "$HOME/.bashrc"; then
-                echo "export PATH=\"$ohmyposh_path\"" >> "$HOME/.bashrc"
-            fi
-
-            if ! grep -q "$ohmyposh_theme_command" "$HOME/.bashrc"; then
-                echo "$ohmyposh_theme_command" >> "$HOME/.bashrc"
-            fi
-
+        sudo pacman -s xorg-server neofetch i3-wm rofi rofi-emoji feh alacritty picom starship paru 
             # Source the updated .bashrc
             source "$HOME/.bashrc"
         else
