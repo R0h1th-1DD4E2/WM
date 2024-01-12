@@ -28,7 +28,7 @@ if_dir_exists() {
 } 
 
 echo "Installing i3, rofi, feh, neofetch.........."
-        sudo pacman -s neofetch i3-wm rofi rofi-emoji feh alacritty picom 
+        sudo pacman -s neofetch i3-wm rofi rofi-emoji feh alacritty picom starship paru 
 
         read -p "Do you want to install oh-my-posh? (y/n): " opinion
         if [ "$opinion" = "y" ] || [ "$opinion" = "Y" ]; then

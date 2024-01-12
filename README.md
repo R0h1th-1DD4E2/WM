@@ -1,13 +1,24 @@
-# WM Setup
+# WM - i3 Window Manager Config
 
-## i3
+## Overview 🪟
 
-The current Repo is on installing and setting up WM in a fresh installed Linux system. This curret script is for the Arch, Fedora and Ubuntu only. I have included few custom written config and also includes Catppuccin based themes.
+Welcome to WM, your go-to repository for an easy and stylish i3 window manager setup! This project provides a hassle-free install experience for configuring your i3 window manager with the popular catppuccino theme. 🐱☕
 
-## Features
+## Setup Instructions 🛠️
 
-## Working on 
+Install the i3 configuration by running the following command in your terminal:
 
-## Contribution
+```bash
+git clone https://github.com/R0h1th-1DD4E2/WM.git
+./install.sh
+```
 
-## Thanks to 
+## Usage Examples 🌐
+
+"I'll include later" - Stay tuned for usage examples and tips!
+
+## Contribution Guidelines 🤝
+
+Contributions are most welcome! Help me extend support to other Linux distributions beyond Arch Linux.
+
+## Happy window managing with WM! 🪟✨
