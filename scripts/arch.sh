@@ -28,11 +28,18 @@ if_dir_exists() {
 } 
 
 echo "Installing i3, rofi, feh, neofetch.........."
-        sudo pacman -s xorg-server neofetch i3-wm rofi rofi-emoji feh alacritty picom starship paru 
-            # Source the updated .bashrc
-            source "$HOME/.bashrc"
-        else
-            echo "Oh-my=posh was not installed ..."
-        fi
+sudo pacman -S xorg-server xorg-apps neofetch i3-wm rofi rofi-emoji feh alacritty picom starship paru dunst git pavucontrol pcmanfm python-pywal ttf-jetbrains-mono-nerd noto-fonts materia-gtk-theme gtk-engines gtk-engine-murrine lxappearance
+paru -S i3lock-fancy catppuccin-gtk-theme-mocha
+
+# Source the updated .bashrc
+
+cat << EOL >> $HOME/.bashrc
+# Source modular configurations
+for file in ~/.bashrc.d/*.sh; do
+    [ -r "$file" ] && source "$file"
+done
+EOL
+
+source "$HOME/.bashrc"
         
-        echo "Moving config files......"
+echo "Moving config files......"

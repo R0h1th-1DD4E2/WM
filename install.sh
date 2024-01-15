@@ -35,7 +35,7 @@ else
     exit 1
 fi
 
-#step 1 - install the i3 window manager and required packages
+# Install the i3 window manager and required packages
 distro=$(cat /etc/os-release | awk -F= '/NAME=/ {gsub(/"/, "", $2); print $2; exit}')
 
 case $distro in
@@ -54,5 +54,3 @@ case $distro in
         echo "$ERR Distribution not supported. This install script is only made for Arch"
         ::
 esac
-
-#step 2 - configure the window manager
