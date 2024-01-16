@@ -28,8 +28,8 @@ if_dir_exists() {
 } 
 
 echo "Installing i3, rofi, feh, neofetch.........."
-sudo pacman -S xorg-server xorg-apps neofetch i3-wm rofi rofi-emoji feh alacritty picom starship paru dunst git pavucontrol pcmanfm python-pywal ttf-jetbrains-mono-nerd noto-fonts materia-gtk-theme gtk-engines gtk-engine-murrine lxappearance
-paru -S i3lock-fancy catppuccin-gtk-theme-mocha
+sudo pacman -S xorg-server xorg-apps neofetch i3-wm rofi rofi-emoji feh alacritty picom starship paru dunst git pavucontrol pcmanfm python-pywal ttf-jetbrains-mono-nerd materia-gtk-theme gtk-engines gtk-engine-murrine lxappearance
+paru -S i3lock-fancy catppuccin-gtk-theme-mocha tela-circle-icon-theme-purple
 
 # Source the updated .bashrc
 
