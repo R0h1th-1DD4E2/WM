@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Some Variables 
 NOT="[\e[1;36mNOTE\e[0m]"
 OK="[\e[1;32mOK\e[0m]"
 ERR="[\e[1;31mERROR\e[0m]"
@@ -42,7 +43,6 @@ case $distro in
     "Arch Linux")
         # Arch Script here
         ./scripts/arch.sh
-
         ;;
     "Fedora Linux")
         # If contributed add it here please
@@ -51,6 +51,6 @@ case $distro in
         # If contributed add it here please
         ;;
     *)
-        echo "$ERR Distribution not supported. This install script is only made for Arch"
+        echo "$ERR Distribution not supported. This install script is only made for Arch for now...!"
         ::
 esac
