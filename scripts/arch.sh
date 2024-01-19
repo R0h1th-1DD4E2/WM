@@ -90,4 +90,4 @@ source "$HOME/.bashrc"
 
 # -------------------------- Stage 2 -----------------------------
 
-echo "$NOT - Stage 2 - Moving config files....."
+echo "$NOT - Stage 2 - Moving config files..."
