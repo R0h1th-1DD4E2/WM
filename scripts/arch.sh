@@ -14,7 +14,15 @@ ERR="[\e[1;31mERROR\e[0m]"
 ATT="[\e[1;37mATTENTION\e[0m]"
 WARN="[\e[1;35mWARNING\e[0m]"
 ACT="[\e[1;33mACTION\e[0m]"
-LOGIT="install.log"
+LOGIT="$HOME/install.log"
+
+# Adding Path as Variables
+BASHRC="$HOME/.bashrc.d"
+CONFIG="$HOME/.config"
+LOCAL="$HOME/.local"
+EXEC="$HOME/.exec"
+FONT="$HOME/.fonts"
+INSTALL_FILE="./install.sh"
 
 # Custom functions here
 install() {
@@ -40,18 +48,28 @@ install() {
   fi
 }
 
-if_dir_exists() {
+mvconfig() {
     local dir_path="$1"
+    local config_path="$2"
 
     if [ -d "$dir_path" ]; then
-        :  # Directory exists
+        echo -e "$NOT - Path $dir_path exists moving files into it" # Directory does exist
     else
-        mkdir "$dir_path"  # Directory does not exist
+        mkdir -p "$dir_path"  # Directory does not exist
     fi
+
+    mv $dir_path "$dir_path.bak" # backup old config files htat exists 
+    cp -rf $config_path $dir_path
 } 
+
+
+# -------------------------- Real Script Here -----------------------------
+
+# -------------------------- Stage 1 -----------------------------
 
 echo -e "$NOT - Stage 1 - Installing packages, this may take a while..."
 
+# Install Require Packages 
 for SOFTWARE in xorg-server xorg-apps neofetch i3-wm rofi rofi-emoji feh alacritty picom starship paru dunst git pavucontrol pcmanfm python-pywal ttf-jetbrains-mono-nerd materia-gtk-theme gtk-engines gtk-engine-murrine lxappearance
     do
         install $SOFTWARE pacman
@@ -62,17 +80,25 @@ for SOFTWARE in i3lock-fancy catppuccin-gtk-theme-mocha tela-circle-icon-theme-p
         install $SOFTWARE paru
 done
 
-# Source the updated .bashrc
-
-cat <<EOL >> $HOME/.bashrc
+# Adding my custom bash aliases and other stuff to main .bashrc file
+cat <<EOF >> $HOME/.bashrc
 # Source custom bash modules
 if [ -d "\$HOME/.bashrc.d" ]; then
     for file in \$HOME/.bashrc.d/*.sh; do
         [ -r "\$file" ] && source "\$file"
     done
 fi
-EOL
+EOF
 
+# Source the updated .bashrc
 source "$HOME/.bashrc"
-        
-echo "Moving config files......"
+
+# -------------------------- Stage 2 -----------------------------
+
+echo "$NOT - Stage 2 - Moving config files..."
+
+if [ -f "$INSTALL_FILE" ]; then
+    mvconfig $BASHRC "$(pwd)/bashrc.d"
+else
+    echo "$ERR - $INSTALL_FILE does not exist in the current directory. Please Run the directory with [\e[1;31mINSTALL FILE\e[0m]."
+fi
