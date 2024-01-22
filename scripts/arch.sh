@@ -22,6 +22,7 @@ CONFIG="$HOME/.config"
 LOCAL="$HOME/.local"
 EXEC="$HOME/.exec"
 FONT="$HOME/.fonts"
+INSTALL_FILE="./install.sh"
 
 # Custom functions here
 install() {
@@ -47,14 +48,18 @@ install() {
   fi
 }
 
-if_dir_exists() {
+mvconfig() {
     local dir_path="$1"
+    local config_path="$2"
 
     if [ -d "$dir_path" ]; then
         echo -e "$NOT - Path $dir_path exists moving files into it" # Directory does exist
     else
         mkdir -p "$dir_path"  # Directory does not exist
     fi
+
+    mv $dir_path "$dir_path.bak" # backup old config files htat exists 
+    cp -rf $config_path $dir_path
 } 
 
 
@@ -91,3 +96,9 @@ source "$HOME/.bashrc"
 # -------------------------- Stage 2 -----------------------------
 
 echo "$NOT - Stage 2 - Moving config files..."
+
+if [ -f "$INSTALL_FILE" ]; then
+    mvconfig $BASHRC "$(pwd)/bashrc.d"
+else
+    echo "$ERR - $INSTALL_FILE does not exist in the current directory. Please Run the directory with [\e[1;31mINSTALL FILE\e[0m]."
+fi
