@@ -19,10 +19,12 @@ LOGIT="$HOME/install.log"
 # Adding Path as Variables
 BASHRC="$HOME/.bashrc.d"
 CONFIG="$HOME/.config"
-LOCAL="$HOME/.local"
+LOCAL="$HOME/.local/share/rofi"
 EXEC="$HOME/.exec"
 FONT="$HOME/.fonts"
+WALL="$HOME/Pictures/wall"
 INSTALL_FILE="./install.sh"
+TOUCHPAD="/etc/X11/xorg.conf.d/30-touchpad.conf"
 
 # Custom functions here
 install() {
@@ -58,8 +60,13 @@ mvconfig() {
         mkdir -p "$dir_path"  # Directory does not exist
     fi
 
-    mv $dir_path "$dir_path.bak" # backup old config files htat exists 
+    if [ -d "$dir_path" ]; then
+      mv $dir_path "$dir_path.bak" # backup old config files htat exists 
+      echo "mvconfig: Backing up existing files to '$dir_path.bak'" &>> $LOGIT
+    fi
+
     cp -rf $config_path $dir_path
+    echo "mvconfig: Copying new config from '$config_path' to '$dir_path'" &>> $LOGIT
 } 
 
 
@@ -98,7 +105,21 @@ source "$HOME/.bashrc"
 echo "$NOT - Stage 2 - Moving config files..."
 
 if [ -f "$INSTALL_FILE" ]; then
-    mvconfig $BASHRC "$(pwd)/bashrc.d"
+    BASE_DIR="$(pwd)"
+
+    mvconfig $BASHRC "$BASE_DIR/bashrc.d"
+    mvconfig $CONFIG "$BASE_DIR/config"
+    mvconfig $EXEC "$BASE_DIR/exec"
+    mvconfig $FONT "$BASE_DIR/fonts"
+    mvconfig $LOCAL "$BASE_DIR/local/share/rofi"
+    mvconfig $WALL "$BASE_DIR/files/wall"
+
+    if ![ -f "$TOUCHPAD" ]; then
+      sudo cp "$BASE_DIR/files/30-touchpad.conf" /etc/X11/xorg.conf.d/
+    fi
+
+    # Update Font Cache
+    fc-cache -fv
 else
-    echo "$ERR - $INSTALL_FILE does not exist in the current directory. Please Run the directory with [\e[1;31mINSTALL FILE\e[0m]."
+    echo "$ERR - $INSTALL_FILE does not exist in the current directory. Please Run the directory with [\e[1;31mINSTALL SCRIPT\e[0m]."
 fi
